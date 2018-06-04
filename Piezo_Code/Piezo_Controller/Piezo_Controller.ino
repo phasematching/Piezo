@@ -45,7 +45,7 @@ void loop() {
 
 void SetDACValue()
 {
-  entered = false
+  entered = false;
   while(entered == false){
     new_dac = Serial.readString();
     if (new_dac != ""){
