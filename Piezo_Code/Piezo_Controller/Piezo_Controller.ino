@@ -13,6 +13,7 @@ char user_input;
 bool entered = false;
 int dac_int;
 String steps;
+float volts = 0;
 
 void setup() {
   Serial.begin(9600);  // Make sure the COM reads the same BAUD rate
@@ -22,6 +23,7 @@ void setup() {
   Serial.println("2. Increase DAC value by 1");
   Serial.println("3. Decrease DAC value by 1");
   Serial.println("4. Set DAC value steps");
+  Serial.println();
   
 }
 
@@ -33,11 +35,11 @@ void loop() {
       }
 
       if (user_input == '2'){
-        StepOneUp();
+        StepUp();
       }
 
       if (user_input == '3'){
-        StepOneDown();
+        StepDown();
       }
 
       if (user_input == '4'){
@@ -50,6 +52,7 @@ void loop() {
 void SetDACValue()
 {
   entered = false;
+  Serial.println("Enter the DAC value you wish to move to: \n");
   while(entered == false){
     new_dac = Serial.readString();
     if (new_dac != ""){
@@ -61,24 +64,31 @@ void SetDACValue()
   dac.setVoltage(dac_value, false);
   Serial.print("DAC value set to: ");
   Serial.println(dac_value);
+  Serial.print("Voltage: ");
+  Serial.println(volts);
+  Serial.println();
   DisplayChoices();
 }
 
-void StepOneUp()
+void StepUp()
 {
-  dac_value++;
   dac.setVoltage(dac_value, false);
   Serial.print("DAC value: ");
   Serial.println(dac_value);
+  Serial.print("Voltage: ");
+  Serial.print(volts);
+  Serial.println();
   DisplayChoices();
 }
 
-void StepOneDown()
+void StepDown()
 {
-  dac_value--;
   dac.setVoltage(dac_value, false);
   Serial.print("DAC value: ");
   Serial.println(dac_value);
+  Serial.print("Voltage: ");
+  Serial.print(volts);
+  Serial.println();
   DisplayChoices();
 }
 
@@ -86,15 +96,17 @@ void SetSteps()
 {
   entered = false;
   String newSteps;
+  Serial.println("Enter the number of steps you want to move: \n");
   while (entered == false){
     newSteps = Serial.readString();
     if (newSteps !=0){
       entered = true;
     }
-    steps = newSteps.toInt();
-    Serial.print("Steps set to: ");
-    Serial.print(steps);
   }
+  steps = newSteps.toInt();
+  Serial.print("Steps set to: ");
+  Serial.println(steps);
+  Serial.println();
   DisplayChoices();
 }
 
@@ -106,5 +118,6 @@ void DisplayChoices()
   Serial.print("3. Decrease DAC value by ");
   Serial.println(steps);
   Serial.println("4. Set DAC value steps");
+  Serial.println();
 }
 
