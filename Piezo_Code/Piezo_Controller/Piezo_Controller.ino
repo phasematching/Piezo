@@ -39,6 +39,10 @@ void loop() {
       if (user_input == '3'){
         StepOneDown();
       }
+
+      if (user_input == '4'){
+        SetSteps();
+      }
   }
 
 }
