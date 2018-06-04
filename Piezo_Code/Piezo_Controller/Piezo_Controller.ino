@@ -12,7 +12,7 @@ float dac_expected_output;
 char user_input;
 bool entered = false;
 int dac_int;
-String steps;
+int steps;
 float volts = 0;
 
 void setup() {
@@ -72,6 +72,7 @@ void SetDACValue()
 
 void StepUp()
 {
+  dac_value += (uint32_t) steps;
   dac.setVoltage(dac_value, false);
   Serial.print("DAC value: ");
   Serial.println(dac_value);
@@ -83,6 +84,7 @@ void StepUp()
 
 void StepDown()
 {
+  dac_value -= (uint32_t) steps;
   dac.setVoltage(dac_value, false);
   Serial.print("DAC value: ");
   Serial.println(dac_value);
